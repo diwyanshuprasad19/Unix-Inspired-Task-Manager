@@ -30,29 +30,30 @@ Django REST Framework
 
 ### 1. Clone and set up virtual environment
 
-git clone <repo-url>
-cd task_manager
-python -m venv venv
-source venv/bin/activate  
-# Windows: venv\Scripts\activate
+- git clone git@github.com:diwyanshuprasad19/Unix-Inspired-Task-Manager.git
+- cd task_manager
+- python -m venv venv
+- source venv/bin/activate  
+# Windows: 
+- venv\Scripts\activate
 
 ## Install dependencies
 
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 ## Apply migrations and create superuser
 
-python manage.py makemigrations
-python manage.py migrate
-python manage.py createsuperuser
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py createsuperuser
 
-Username:admin@local.com
+- Username:admin@local.com
 
-Password:12345
+- Password:12345
 
 ## Run the development server
 
-python manage.py runserver
+- python manage.py runserver
 
 ### 🔐 Authentication (Token-based)
 
@@ -69,15 +70,17 @@ API Endpoints
 
 Action	Method	URL
 
-Get Auth Token	POST	http://127.0.0.1:8000/api-token-auth/
-Create Task	POST	http://127.0.0.1:8000/api/tasks/
-List Tasks	GET	http://127.0.0.1:8000/api/tasks/
-Filter by Status	GET	http://127.0.0.1:8000/api/tasks/?status=completed
-Get Task by ID	GET	http://127.0.0.1:8000/api/tasks/<id>/
-Delete Task	DELETE	http://127.0.0.1:8000/api/tasks/<id>/
-Update Task Status	PATCH	http://127.0.0.1:8000/api/tasks/<id>/
-Health Check	GET	http://127.0.0.1:8000/api/health/
-🌐 Frontend UI (index.html)
+- Get Auth Token	POST	http://127.0.0.1:8000/api-token-auth/
+- Create Task	POST	http://127.0.0.1:8000/api/tasks/
+- List Tasks	GET	http://127.0.0.1:8000/api/tasks/
+- Filter by Status	GET	http://127.0.0.1:8000/api/tasks/?status=completed
+- Get Task by ID	GET	http://127.0.0.1:8000/api/tasks/<id>/
+- Delete Task	DELETE	http://127.0.0.1:8000/api/tasks/<id>/
+- Update Task Status	PATCH	http://127.0.0.1:8000/api/tasks/<id>/
+- Health Check	GET	http://127.0.0.1:8000/api/health/
+
+
+## Frontend UI (index.html)
 Open index.html in any browser
 
 Replace your_token_here with your token in the script section
@@ -85,14 +88,14 @@ Replace your_token_here with your token in the script section
 ## CLI Tool (client.py)
 Usage examples:
 
-python client.py fork "Clean temp files"
-python client.py ls
-python client.py show 1
-python client.py done 1
-python client.py rm 1
-Make sure to update the token in client.py
+- python client.py fork "Clean temp files"
+- python client.py ls
+- python client.py show 1
+- python client.py done 1
+- python client.py rm 1
+- Make sure to update the token in client.py
 
 ## Run Tests
 
-python manage.py test tasks
+- python manage.py test tasks
 
