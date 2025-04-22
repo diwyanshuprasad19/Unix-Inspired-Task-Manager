@@ -1,0 +1,158 @@
+1. Get Token (Login)
+
+Request:
+
+curl --location 'http://127.0.0.1:8000/api-token-auth/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "username": "admin@local.com",
+  "password": "12345"
+}
+'
+
+Response:
+{
+    "token": "1a6660f8af01595b7548e04504dead3f9ded40b9"
+}
+
+
+2. Create Task
+
+Request:
+
+curl --location 'http://127.0.0.1:8000/api/tasks/' \
+--header 'Authorization: Token 1a6660f8af01595b7548e04504dead3f9ded40b9' \
+--header 'Content-Type: application/json' \
+--data '{
+  "name": "Generate Reports"
+}
+'
+
+
+Response:
+
+{
+  "id": 1,
+  "name": "Generate Reports",
+  "status": "running",
+  "created_at": "2025-04-21T08:15:01.365337Z",
+  "updated_at": "2025-04-21T08:15:01.365370Z",
+  "user": 1
+}
+
+After 5 seconds, it will auto-update to "completed" or "failed".
+
+
+3. List All Tasks
+
+Request:
+
+curl --location 'http://127.0.0.1:8000/api/tasks/' \
+--header 'Authorization: Token 1a6660f8af01595b7548e04504dead3f9ded40b9'
+
+Response:
+[
+    {
+        "id": 1,
+        "name": "Generate Reports",
+        "status": "completed",
+        "created_at": "2025-04-21T08:15:01.365337Z",
+        "updated_at": "2025-04-21T08:15:06.372757Z",
+        "user": 1
+    }
+]
+
+
+4. Get Task by ID
+
+Request:
+
+curl --location 'http://127.0.0.1:8000/api/tasks/1/' \
+--header 'Authorization: Token 1a6660f8af01595b7548e04504dead3f9ded40b9'
+
+Response:
+{
+  "id": 1,
+  "name": "Generate Reports",
+  "status": "completed",
+  "created_at": "2025-04-21T08:15:01.365337Z",
+  "updated_at": "2025-04-21T08:15:06.372757Z",
+  "user": 1
+}
+
+
+5. Update Task Status (Manually)
+
+Request:
+
+curl --location --request PATCH 'http://127.0.0.1:8000/api/tasks/1/' \
+--header 'Authorization: Token 1a6660f8af01595b7548e04504dead3f9ded40b9' \
+--header 'Content-Type: application/json' \
+--data '{
+  "status": "failed"
+}'
+
+Response:
+{
+  "id": 1,
+  "name": "Generate Reports",
+  "status": "failed",
+  "created_at": "2025-04-21T08:15:01.365337Z",
+  "updated_at": "2025-04-21T08:21:09.079501Z",
+  "user": 1
+}
+
+
+6. Filter Tasks by Status
+
+Request:
+
+curl --location 'http://127.0.0.1:8000/api/tasks/?status=failed' \
+--header 'Authorization: Token 1a6660f8af01595b7548e04504dead3f9ded40b9'
+
+Response:
+[
+    {
+        "id": 1,
+        "name": "Generate Reports",
+        "status": "failed",
+        "created_at": "2025-04-21T08:15:01.365337Z",
+        "updated_at": "2025-04-21T08:21:09.079501Z",
+        "user": 1
+    },
+    {
+        "id": 2,
+        "name": "Generate Reports_2",
+        "status": "failed",
+        "created_at": "2025-04-21T08:22:29.883764Z",
+        "updated_at": "2025-04-21T08:22:34.888959Z",
+        "user": 1
+    }
+]
+
+
+7. Delete a Task
+
+Request:
+
+curl --location --request DELETE 'http://127.0.0.1:8000/api/tasks/1/' \
+--header 'Authorization: Token 1a6660f8af01595b7548e04504dead3f9ded40b9'
+
+
+Response:
+
+204
+No Content
+
+8. Health Check
+
+Request:
+
+curl --location 'http://127.0.0.1:8000/api/health/'
+
+
+Response:
+
+{
+  "status": "ok"
+}

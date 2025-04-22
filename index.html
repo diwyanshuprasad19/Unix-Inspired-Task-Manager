@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Unix-Inspired Task Manager UI</title>
+  <style>
+    body { font-family: Arial; margin: 2rem; }
+    input { padding: 0.5rem; width: 300px; }
+    button { margin-left: 0.5rem; padding: 0.5rem; }
+    li { margin: 0.5rem 0; }
+  </style>
+</head>
+<body>
+  <h2>🧠 Task Manager</h2>
+
+  <input type="text" id="taskName" placeholder="Enter new task name" />
+  <button onclick="createTask()">Fork (Create)</button>
+
+  <h3>📋 All Tasks</h3>
+  <ul id="taskList"></ul>
+
+  <script>
+    // ✅ Replace this token with your real token
+    const TOKEN = "1a6660f8af01595b7548e04504dead3f9ded40b9";
+
+    const BASE_URL = "http://127.0.0.1:8000/api";
+
+    function fetchTasks() {
+      fetch(`${BASE_URL}/tasks/`, {
+        headers: { Authorization: `Token ${TOKEN}` }
+      })
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("taskList");
+        list.innerHTML = "";
+        data.forEach(task => {
+          const li = document.createElement("li");
+          li.textContent = `[${task.id}] ${task.name} — ${task.status}`;
+          list.appendChild(li);
+        });
+      });
+    }
+
+    function createTask() {
+      const name = document.getElementById("taskName").value;
+      if (!name) return alert("Task name cannot be empty!");
+
+      fetch(`${BASE_URL}/tasks/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${TOKEN}`
+        },
+        body: JSON.stringify({ name })
+      })
+      .then(() => {
+        document.getElementById("taskName").value = "";
+        fetchTasks();
+      });
+    }
+
+    // Auto-refresh every 5 seconds
+    setInterval(fetchTasks, 5000);
+    fetchTasks();
+  </script>
+</body>
+</html>
